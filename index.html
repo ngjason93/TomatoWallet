@@ -7,16 +7,22 @@
 
 <style>
 
+
+
+
+
+
+
+
 .header{grid-area: header;}
 .timer {grid-area: timer; text-align: center; font-size: 4vw; padding: 10vh;}
 .wallet {grid-area: wallet; }
-.spendmoney {grid-area: spendmoney;}
+.spendmoney {grid-area: spendmoney; font-family: 'Pacifico', cursive;}
 .footer{grid-area: footer;}
 .hour{grid-area: hour;}
-#header{text-align: center; font-size: 2vw; padding: 3vh; background:orange;}
-#addwallet {text-align: center;}
+#header{font-family: 'Pacifico', cursive; text-align: center; font-size: 2vw; padding: 3vh; background:orange;}
 #walletgrid {height: 100%;display: grid; grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%; }
-#addwallet{grid-column-start: 5; grid-column-end:6; grid-row-start: 1; grid-row-end: 2;}
+#addwallet{grid-column-start: 1; grid-column-end: 11; grid-row-start: 1;grid-row-end: 11;display: none;text-align: center;z-index: 3; font-size: 5vw;}
 .tomatoes{display: flex; grid-row-start:2; grid-row-end: 11; grid-column-start:1;grid-column-end:11; font-size: 3vw;}
 .wrapper{
   height: 100vh;
@@ -36,26 +42,31 @@
 
 .box{border: 1px solid black;}
 
-.wallet {background-color: brown;}
+.wallet {background-color: black;}
 #timer {display: grid; grid-template-rows: 60% 30%; grid-template-columns: 33% 33% 33%;}
 .timerbuttons{ display: grid;grid-row-start: 2; grid-row-end: 3;}
 #timercountdown {grid-column-start: 2;grid-column-end: 3;}
-#clicktoadd{text-align:center;font-size: 3vw; border: 1px dotted pink; width: 100%}
+#clicktoadd{font-family: 'Pacifico', cursive;text-align:left;font-size: 3vw; border: 1px dotted pink; width: 100%}
 #uno{height: 7vh; font-size: 2vw; }
 #spendmoney{font-size: 2.5vw;}
-#desc { grid-row-start: 10; grid-row-end: 11; grid-column-start: 1; grid-column-end: 11; color: white; font-size: 2vw;}
+#desc { grid-row-start: 10; grid-row-end: 11; grid-column-start: 1; grid-column-end: 11; color: white; font-size: 1.5vw;}
+#star{display:none;}
+#gameScreen{grid-column-start:1;grid-column-end:10; grid-row-start: 2;grid-row-end:10;}
+/* #insertStar{text-align: center;grid-column-start: 6; grid-column-end:7; grid-row-start: 10; grid-row-end: 11;z-index: 3;} */
 </style>
 
 <head>
 	<meta charset="utf-8">
-	<title>Tomato Wallet</title>
+	<title>Tomato Collector</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
 	<!-- <link rel="stylesheet" href="css/style.css"> -->
 
 </head>
 <body>
 
   <div class='wrapper'>
-    <header class='box header' id='header'> Your Tomato Wallet</header>
+    <header class='box header' id='header'> Tomato Hunt </header>
     <div class='box timer'id='timer' >
       <button class='timerbuttons' id='start' onclick='timer(25)'> Start</button>
       <button class='timerbuttons' onclick='stoptimer()'> Reset </button>
@@ -63,12 +74,20 @@
        <div id='timercountdown'> 25:00 Timer</div>
      </div>
 
-    <div class='box wallet'> <div id='walletgrid'> <div class='tomatoes' id='tomatoes'> </div> <button id='addwallet' onclick='addtomato()'> Add $ </button> <div id='desc'> All $ earned today shown here</div> </div> </div>
-    <div class='box spendmoney' id='spendmoney' onclick='howMuch()'> Click here to take a break. Each $ spent is a 5 minute break</div>
+    <div class='box wallet'>
+       <div id='walletgrid'>
+         <canvas id='gameScreen' width='720' height='250'></canvas>
+         <button id='addwallet' onclick=addStar()> Congrats! Click to add your tomato :) </button>
+         <!-- <button id='insertStar' onclick='insertStar()'> Create Stars </button> -->
+
+         <div id='desc'></div>
+       </div>
+   </div>
+    <div class='box spendmoney' id='spendmoney' onclick='howMuch()'> Click here to take a break </div>
     <div class='box footer'> ngjason93@gmail.com </div>
     <div class='box hour'>
       <div id='hourslist'>
-          <button id='clicktoadd' onclick='whatDo()'> Click to add what you did :)</button>
+          <button id='clicktoadd' onclick='whatDo()'> Timestamped notes :) <br> Click to add: </button>
           <div id='uno'> </div>
 
       </div>
@@ -81,6 +100,7 @@
   </div>
 
 
+  <img id='star' src='star.png'>
 
 </body>
 
@@ -95,11 +115,11 @@ var didlist = []
 
 
   function howMuch(){
-    var spend = prompt('How many tomatoes do you want to spend?', 'Each $ is 5 minutes')
+    var spend = prompt('How long?', 'Give yourself 5 Mins per tomato you"ve done')
     console.log('spent ' + spend + ' Now function to remove little dollars from wallet')
     console.log(tomatocount)
     console.log(spend)
-    timer(spend*5)
+    timer(spend)
 
     tomatocount -= Number(spend);
     console.log(tomatocount)
@@ -109,7 +129,7 @@ var didlist = []
   }
   function whatDo(){
     var what = prompt('What did you do', 'This gets saved for later');
-    var whatwstamp = document.getElementById('uno').innerHTML += '<br>' + what + ', Timestamp: ' +datetime;
+    var whatwstamp = document.getElementById('uno').innerHTML += '<br>' + what + ', at: ' +datetime;
     didlist.push(what,datetime)
     console.log(didlist);
 
@@ -147,6 +167,7 @@ function timer(mins){
       // document.getElementById("demo").addEventListener("click", timer)
       document.getElementById('start').style.display = 'grid'
       document.getElementById('timerup').play()
+      document.getElementById('addwallet').style.display= 'grid';
 
     }
   }, 1000);
@@ -164,18 +185,95 @@ function openprompt(){
   stoptimer();
   timer(insertMin)
 }
+// function insertStar(){
+//   var insStar = prompt('How many did you have?','numbers only');
+//   setStars(insStar)}
 
+function idingStars(i){
+  var newStarId= 'star' + i;
+  console.log(newStarId);
+  return newStarId;
+
+}
 tomatocount =0
 function addtomato(){
   tomatocount +=1;
-  console.log(tomatocount);
-  if (tomatocount % 12 ==0){
-    document.getElementById('tomatoes').innerHTML += ' 12 ';
-  } else{
-    document.getElementById('tomatoes').innerHTML += ' $ '
-    document.getElementById('spendmoney').innerHTML =   'Saved Tomatos:' + tomatocount
+  var newstar = document.createElement('div');
+  newstar.className = 'star-five'
+  var starID = idingStars(tomatocount)
+  newstar.setAttribute('id',starID)
+  var tomwallet = document.getElementById('tomatoes')
+  tomwallet.appendChild(newstar)
 
-  }}
+  document.getElementById('tomatoes').innerHTML += ' $ '
+  document.getElementById('spendmoney').innerHTML =   'Saved Tomatos:' + tomatocount}
+///////////////////////////ADDING GAME CANVAS/////////////
+let imgStar = document.getElementById('star');
+let canvas = document.getElementById('gameScreen');
+let ctx = canvas.getContext('2d');
+const GAME_WIDTH = 420;
+const GAME_HEIGHT = 420;
+
+
+
+
+let starCount =0
+function addStar(){
+  starCount +=1
+  console.log('starcount debugging' +starCount)
+  document.getElementById('addwallet').style.display= 'none'
+  determineMath(starCount)
+
+  return starCount
+}
+// function setStars(input){
+//   ctx.clearRect(0,0,720,250)
+//   starCount=input;
+//   console.log('SETSTARS starcount is : ' +starCount)
+//   determineMath(starCount)
+// }
+
+function determineMath(starcount){
+  let totalrows = Math.trunc(starCount/8)
+  console.log(totalrows)
+  let y = totalrows
+  let leftover = starCount%8
+  console.log(leftover)
+
+  if (totalrows >0){
+    drawMultipleRows(totalrows)
+    if (leftover>0){
+      console.log('gethere? y is equal to ' +y)
+      drawStar(leftover,y)
+    }
+  }
+  else{
+    drawStar(starCount,0)
+  }
+
+}
+
+function drawRow(y){
+  let array = [ 0, 60,120,180,240,300,360,420];
+  for (let i=0;i<10;i++){
+  ctx.drawImage(imgStar, array[i], y )
+}}
+function drawStar(rem,y){
+  let array = [ 0, 60,120,180,240,300,360,420];
+  for (let i=0;i<rem;i++){
+  ctx.drawImage(imgStar, array[i], array[y] )
+
+}
+}
+function drawMultipleRows(howmany){
+  let arrayy = [0, 60,120,180,240,300,360,420]
+  for (let z=0;z<howmany;z++){
+  drawRow(arrayy[z])
+
+}}
+
+
+
 
 </script>
 </html>
