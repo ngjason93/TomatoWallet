@@ -137,6 +137,12 @@ var didlist = []
   }
   function whatDo(){
     var what = prompt('What did you do', 'This gets saved for later');
+    var today = new Date();
+
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes();
+    let datetime = time+', ' +date
+    console.log(datetime)
     var whatwstamp = document.getElementById('uno').innerHTML += '<br>' + what + ', at: ' +datetime;
     didlist.push(what,datetime)
     console.log(didlist);
