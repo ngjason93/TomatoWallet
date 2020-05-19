@@ -22,7 +22,7 @@
 .hour{grid-area: hour;}
 #header{font-family: 'Pacifico', cursive; text-align: center; font-size: 2vw; padding: 3vh; background:orange;}
 #walletgrid {height: 100%;display: grid; grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%; }
-#addwallet{grid-column-start: 1; grid-column-end: 11; grid-row-start: 1;grid-row-end: 11;display: none;text-align: center;z-index: 3; font-size: 5vw;}
+/* #addwallet{display: grid;grid-row-start: 2; grid-row-end: 3;font-style: oblique;} */
 .tomatoes{display: flex; grid-row-start:2; grid-row-end: 11; grid-column-start:1;grid-column-end:11; font-size: 3vw;}
 .wrapper{
   height: 100vh;
@@ -46,6 +46,7 @@
 #timer {display: grid; grid-template-rows: 60% 30%; grid-template-columns: 33% 33% 33%;}
 .timerbuttons{ display: grid;grid-row-start: 2; grid-row-end: 3;}
 #timercountdown {grid-column-start: 2;grid-column-end: 3;}
+#howthisworks{grid-column-start:3; grid-column-end:3; font-size: 2vw;text-align: left; grid-row-start: 1; grid-row-end: 2; margin: 1vw;}
 #clicktoadd{font-family: 'Pacifico', cursive;text-align:left;font-size: 3vw; border: 1px dotted pink; width: 100%}
 #uno{height: 7vh; font-size: 2vw; }
 #spendmoney{font-size: 2.5vw;}
@@ -53,6 +54,7 @@
 #star{display:none;}
 #gameScreen{grid-column-start:1;grid-column-end:10; grid-row-start: 2;grid-row-end:10;}
 /* #insertStar{text-align: center;grid-column-start: 6; grid-column-end:7; grid-row-start: 10; grid-row-end: 11;z-index: 3;} */
+#setcountdown{display:none;}
 </style>
 
 <head>
@@ -68,16 +70,18 @@
   <div class='wrapper'>
     <header class='box header' id='header'> Tomato Hunt </header>
     <div class='box timer'id='timer' >
-      <button class='timerbuttons' id='start' onclick='timer(25)'> Start</button>
+      <button class='timerbuttons' id='start' onclick='timer(25,0)'> Start</button>
       <button class='timerbuttons' onclick='stoptimer()'> Reset </button>
-      <button class='timerbuttons'onclick='openprompt()'> New Countdown </button>
+      <!-- <button id='addwallet' onclick=addStar()> Click here to add your tomato  </button> -->
+
+      <button class='timerbuttons' id='setcountdown'onclick='openprompt()'> New Countdown </button>
        <div id='timercountdown'> 25:00 Timer</div>
+       <div id='howthisworks'> Instructions: <br> When the timer finishes you get a tomato :) </div>
      </div>
 
     <div class='box wallet'>
        <div id='walletgrid'>
          <canvas id='gameScreen' width='720' height='250'></canvas>
-         <button id='addwallet' onclick=addStar()> Congrats! Click to add your tomato :) </button>
          <!-- <button id='insertStar' onclick='insertStar()'> Create Stars </button> -->
 
          <div id='desc'></div>
@@ -119,12 +123,11 @@ var didlist = []
     console.log('spent ' + spend + ' Now function to remove little dollars from wallet')
     console.log(tomatocount)
     console.log(spend)
-    timer(spend)
+    timer(spend*5,1)
 
-    tomatocount -= Number(spend);
-    console.log(tomatocount)
-    document.getElementById('spendmoney').innerHTML = tomatocount;
-    console.log('tomatocount is' + tomatocount)
+    starCount -= spend;
+    console.log(starCount)
+
 
   }
   function whatDo(){
@@ -136,10 +139,10 @@ var didlist = []
   }
 
 
-function timer(mins){
+function timer(mins,isbreak){
   var plus = new Date().getTime();
   plus += 60000*mins
-  document.getElementById('start').style.display = 'none'
+  document.getElementById('start').style.visibility = 'hidden';
 
   x = setInterval(function() {
 
@@ -167,18 +170,25 @@ function timer(mins){
       // document.getElementById("demo").addEventListener("click", timer)
       document.getElementById('start').style.display = 'grid'
       document.getElementById('timerup').play()
-      document.getElementById('addwallet').style.display= 'grid';
+      document.getElementById('start').style.visibility = 'visible';
+
+      if (isbreak==0){
+        console.log('isbreak is 0');
+        addStar()
+      }//isbreak 0 is not break
+      // document.getElementById('addwallet').style.display= 'grid';
 
     }
   }, 1000);
 }
 function stoptimer(){
-  try{clearInterval(x)}
+  try{
+    clearInterval(x);
+    document.getElementById('start').style.visibility = 'visible';
+    document.getElementById("timercountdown").innerHTML = "EXPIRED";}
   catch(err){
-  document.getElementById('start').style.display = 'grid';
-  document.getElementById("timercountdown").innerHTML = "EXPIRED";}
-  document.getElementById('start').style.display = 'grid';
-  document.getElementById("timercountdown").innerHTML = "EXPIRED";
+    document.getElementById('start').style.visibility = 'visible';
+    document.getElementById("timercountdown").innerHTML = "EXPIRED";}
 }
 function openprompt(){
   var insertMin = prompt('How many minutes?','numbers only')
@@ -221,7 +231,7 @@ let starCount =0
 function addStar(){
   starCount +=1
   console.log('starcount debugging' +starCount)
-  document.getElementById('addwallet').style.display= 'none'
+  // document.getElementById('addwallet').style.display= 'none'
   determineMath(starCount)
 
   return starCount
@@ -271,6 +281,18 @@ function drawMultipleRows(howmany){
   drawRow(arrayy[z])
 
 }}
+
+function clearCanvas(){
+  ctx.clearRect(0,0, 720, 250);
+  starCount = 0;
+
+  console.log(starCount+ 'starcountis beforeclearing')
+}
+let show1 = setTimeout(addStar,1000)
+let show2 = setTimeout(addStar,1500)
+let show3 = setTimeout(addStar,2000)
+
+let clear = setTimeout(clearCanvas,4000)
 
 
 
