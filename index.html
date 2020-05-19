@@ -121,12 +121,17 @@ var didlist = []
   function howMuch(){
     var spend = prompt('How long?', 'Give yourself 5 Mins per tomato you"ve done')
     console.log('spent ' + spend + ' Now function to remove little dollars from wallet')
-    console.log(tomatocount)
     console.log(spend)
     timer(spend*5,1)
-
     starCount -= spend;
-    console.log(starCount)
+    let pH = starCount
+
+    clearCanvas()
+    console.log(starCount+'isstarcount/ thisshouldbe 0'+ 'ph is: '+pH)
+    for (i=0;i<pH;i++){
+      console.log('Loop with ph?')
+      addStar()
+    }
 
 
   }
