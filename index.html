@@ -28,7 +28,7 @@ body{margin: 3px;}
   display: grid;
   grid-gap: 10px;
   grid-template-columns: 10% 40% 40% 10%;
-  grid-template-rows: 10% 35% 30% 15% 10%;
+  grid-template-rows: 10% 45% 35% 10%;
 
   grid-template-areas:
   "header header header header"
@@ -44,7 +44,7 @@ body{margin: 3px;}
 .wallet {background-color: black;}
 #timer {display: grid; grid-template-rows: 50% 30% 10%; grid-template-columns:33% 33% 33%;}
 .timerbuttons{ display: grid;grid-row-start: 2; grid-row-end: 3;}
-#timercountdown {grid-column-start: 1;grid-column-end: 4;}
+#timercountdown {grid-column-start: 1;grid-column-end: 4; padding: 1vw;}
 #howthisworks{grid-row-start: 3; grid-row-end: 4; grid-column-start: 1; grid-column-end: 4; font-size: 1.5vw; padding: 2vw;}
 #clicktoadd{font-family: 'Pacifico', cursive;text-align:left;font-size: 3vw; border: 1px dotted pink; width: 100%}
 #uno{height: 7vh; font-size: 2vw; }
@@ -123,16 +123,19 @@ var didlist = []
     var spend = prompt('How many do you want to use?', 'Each tomato is a 5 Minute break')
     console.log('spent ' + spend + ' Now function to remove little dollars from wallet')
     console.log(spend)
-    timer(spend*5,1)
-    starCount -= spend;
-    let pH = starCount
+    if (spend <=starCount){
+      timer(spend*5,1)
+      starCount -= spend;
+      let pH = starCount
 
-    clearCanvas()
-    console.log(starCount+'isstarcount/ thisshouldbe 0'+ 'ph is: '+pH)
-    for (i=0;i<pH;i++){
-      console.log('Loop with ph?')
-      addStar()
-    }
+      clearCanvas()
+      console.log(starCount+'isstarcount/ thisshouldbe 0'+ 'ph is: '+pH)
+      for (i=0;i<pH;i++){
+        console.log('Loop with ph?')
+        addStar()
+      }
+
+    } else {alert('Not enough tomatoes')}
 
 
   }
@@ -144,7 +147,7 @@ var didlist = []
     var time = today.getHours() + ":" + today.getMinutes();
     let datetime = time+', ' +date
     console.log(datetime)
-    var whatwstamp = document.getElementById('uno').innerHTML += '<br>' + what + ', at: ' +datetime;
+    var whatwstamp = document.getElementById('uno').innerHTML += '<br>' + datetime+ ': ' + what;
     didlist.push(what,datetime)
     console.log(didlist);
 
@@ -210,31 +213,31 @@ function openprompt(){
 // function insertStar(){
 //   var insStar = prompt('How many did you have?','numbers only');
 //   setStars(insStar)}
-
-function idingStars(i){
-  var newStarId= 'star' + i;
-  console.log(newStarId);
-  return newStarId;
-
-}
-tomatocount =0
-function addtomato(){
-  tomatocount +=1;
-  var newstar = document.createElement('div');
-  newstar.className = 'star-five'
-  var starID = idingStars(tomatocount)
-  newstar.setAttribute('id',starID)
-  var tomwallet = document.getElementById('tomatoes')
-  tomwallet.appendChild(newstar)
-
-  document.getElementById('tomatoes').innerHTML += ' $ '
-  document.getElementById('spendmoney').innerHTML =   'Saved Tomatos:' + tomatocount}
-///////////////////////////ADDING GAME CANVAS/////////////
+//
+// function idingStars(i){
+//   var newStarId= 'star' + i;
+//   console.log(newStarId);
+//   return newStarId;
+//
+// }
+// tomatocount =0
+// function addtomato(){
+//   tomatocount +=1;
+//   var newstar = document.createElement('div');
+//   newstar.className = 'star-five'
+//   var starID = idingStars(tomatocount)
+//   newstar.setAttribute('id',starID)
+//   var tomwallet = document.getElementById('tomatoes')
+//   tomwallet.appendChild(newstar)
+//
+//   document.getElementById('tomatoes').innerHTML += ' $ '
+//   document.getElementById('spendmoney').innerHTML =   'Saved Tomatos:' + tomatocount}
+// ///////////////////////////ADDING GAME CANVAS/////////////
 let imgStar = document.getElementById('star');
 let canvas = document.getElementById('gameScreen');
 let ctx = canvas.getContext('2d');
-const GAME_WIDTH = 420;
-const GAME_HEIGHT = 420;
+// const GAME_WIDTH = 420;
+// const GAME_HEIGHT = 420;
 
 
 
