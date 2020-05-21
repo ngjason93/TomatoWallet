@@ -6,8 +6,7 @@
 
 
 <style>
-
-
+body{margin: 3px;}
 
 
 
@@ -17,10 +16,10 @@
 .header{grid-area: header;}
 .timer {grid-area: timer; text-align: center; font-size: 4vw; padding: 10vh;}
 .wallet {grid-area: wallet; }
-.spendmoney {grid-area: spendmoney; font-family: 'Pacifico', cursive;}
-.footer{grid-area: footer;}
+/* .spendmoney {grid-area: spendmoney; font-family: 'Pacifico', cursive;} */
+.footer{grid-area: footer; background: orange;}
 .hour{grid-area: hour;}
-#header{font-family: 'Pacifico', cursive; text-align: center; font-size: 2vw; padding: 3vh; background:orange;}
+#header{font-family: 'Pacifico', cursive; text-align: center; font-size: 5vw; padding: 3vh; background:orange;}
 #walletgrid {height: 100%;display: grid; grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%; }
 /* #addwallet{display: grid;grid-row-start: 2; grid-row-end: 3;font-style: oblique;} */
 .tomatoes{display: flex; grid-row-start:2; grid-row-end: 11; grid-column-start:1;grid-column-end:11; font-size: 3vw;}
@@ -35,7 +34,7 @@
   "header header header header"
   "timer timer timer  timer"
   "wallet wallet hour  hour"
-  "spendmoney spendmoney hour hour"
+  /* "spendmoney spendmoney hour hour" */
   "footer footer footer footer";
 
 }
@@ -43,10 +42,10 @@
 .box{border: 1px solid black;}
 
 .wallet {background-color: black;}
-#timer {display: grid; grid-template-rows: 60% 30%; grid-template-columns: 33% 33% 33%;}
+#timer {display: grid; grid-template-rows: 50% 30% 10%; grid-template-columns:33% 33% 33%;}
 .timerbuttons{ display: grid;grid-row-start: 2; grid-row-end: 3;}
-#timercountdown {grid-column-start: 2;grid-column-end: 3;}
-#howthisworks{grid-column-start:3; grid-column-end:3; font-size: 2vw;text-align: left; grid-row-start: 1; grid-row-end: 2; margin: 1vw;}
+#timercountdown {grid-column-start: 1;grid-column-end: 4;}
+#howthisworks{grid-row-start: 3; grid-row-end: 4; grid-column-start: 1; grid-column-end: 4; font-size: 1.5vw; padding: 2vw;}
 #clicktoadd{font-family: 'Pacifico', cursive;text-align:left;font-size: 3vw; border: 1px dotted pink; width: 100%}
 #uno{height: 7vh; font-size: 2vw; }
 #spendmoney{font-size: 2.5vw;}
@@ -55,6 +54,7 @@
 #gameScreen{grid-column-start:1;grid-column-end:10; grid-row-start: 2;grid-row-end:10;}
 /* #insertStar{text-align: center;grid-column-start: 6; grid-column-end:7; grid-row-start: 10; grid-row-end: 11;z-index: 3;} */
 #setcountdown{display:none;}
+#quote{font-size: 3.3vw; font-style: italic; font-weight: bold;}
 </style>
 
 <head>
@@ -72,11 +72,12 @@
     <div class='box timer'id='timer' >
       <button class='timerbuttons' id='start' onclick='timer(25,0)'> Start</button>
       <button class='timerbuttons' onclick='stoptimer()'> Reset </button>
+      <button class='timerbuttons' onclick='howMuch()'> Take Break( Cost 1 Tomato) </button>
       <!-- <button id='addwallet' onclick=addStar()> Click here to add your tomato  </button> -->
 
       <button class='timerbuttons' id='setcountdown'onclick='openprompt()'> New Countdown </button>
        <div id='timercountdown'> 25:00 Timer</div>
-       <div id='howthisworks'> Instructions: <br> When the timer finishes you get a tomato :) </div>
+       <div id='howthisworks'> Instructions: <br> A tomato appears each time you finish a 25 min block. Spend your tomatoes below for breaks </div>
      </div>
 
     <div class='box wallet'>
@@ -87,11 +88,11 @@
          <div id='desc'></div>
        </div>
    </div>
-    <div class='box spendmoney' id='spendmoney' onclick='howMuch()'> Click here to take a break </div>
-    <div class='box footer'> ngjason93@gmail.com </div>
+    <!-- <div class='box spendmoney' id='spendmoney' onclick='howMuch()'> Click here to take a break </div> -->
+    <div id ='quote'class='box footer'> Inspirational quote: </div>
     <div class='box hour'>
       <div id='hourslist'>
-          <button id='clicktoadd' onclick='whatDo()'> Timestamped notes :) <br> Click to add: </button>
+          <button id='clicktoadd' onclick='whatDo()'> Click here to add notes</button>
           <div id='uno'> </div>
 
       </div>
@@ -119,7 +120,7 @@ var didlist = []
 
 
   function howMuch(){
-    var spend = prompt('How long?', 'Give yourself 5 Mins per tomato you"ve done')
+    var spend = prompt('How many do you want to use?', 'Each tomato is a 5 Minute break')
     console.log('spent ' + spend + ' Now function to remove little dollars from wallet')
     console.log(spend)
     timer(spend*5,1)
@@ -305,8 +306,33 @@ let show3 = setTimeout(addStar,2000)
 
 let clear = setTimeout(clearCanvas,4000)
 
+function saveJson(input){
+  quotejson = input
+
+}
+let quotejson = []
+fetch("https://type.fit/api/quotes")
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(data) {
+
+    let quotejson = data;
+    let randy = Math.floor(Math.random()*quotejson.length)
+    let quotetext = quotejson[randy].text;
+    document.getElementById('quote').innerHTML += quotetext + '<button id="quotebutto" onclick="newQuote()"> New Quote</button>'
+    saveJson(quotejson)
 
 
 
+
+  });
+function newQuote(){
+  let ab =quotejson
+  let randy = Math.floor(Math.random()*ab.length)
+  let abc = ab[randy].text;
+  document.getElementById('quote').innerHTML = abc + '<button id="quotebutto" onclick="newQuote()"> New Quote</button>'
+
+}
 </script>
 </html>
