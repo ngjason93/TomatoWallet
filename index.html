@@ -7,7 +7,7 @@
 
 <style>
 body{margin: 3px;}
-
+.timerbuttons{border-radius: 2vw; z-index: 3;height: 80%}
 
 
 
@@ -17,18 +17,19 @@ body{margin: 3px;}
 .timer {grid-area: timer; text-align: center; font-size: 4vw; padding: 10vh;}
 .wallet {grid-area: wallet; }
 /* .spendmoney {grid-area: spendmoney; font-family: 'Pacifico', cursive;} */
-.footer{grid-area: footer; background: orange;}
+.footer{grid-area: footer;}
 .hour{grid-area: hour;}
 #header{font-family: 'Pacifico', cursive; text-align: center; font-size: 5vw; padding: 3vh; background:orange;}
 #walletgrid {height: 100%;display: grid; grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%; }
 /* #addwallet{display: grid;grid-row-start: 2; grid-row-end: 3;font-style: oblique;} */
 .tomatoes{display: flex; grid-row-start:2; grid-row-end: 11; grid-column-start:1;grid-column-end:11; font-size: 3vw;}
 .wrapper{
-  height: 100vh;
+  height: 90vh;
+  width: 99vw;
   display: grid;
   grid-gap: 10px;
   grid-template-columns: 10% 40% 40% 10%;
-  grid-template-rows: 8% 45% 28% 14%;
+  grid-template-rows: 7% 70% 15% 10%;
 
   grid-template-areas:
   "header header header header"
@@ -39,65 +40,111 @@ body{margin: 3px;}
 
 }
 
-.box{border: 1px solid black;}
+/* .box{border: 1px solid black;} */
 
-.wallet {background-color: #01DF01;}
-#timer {display: grid; grid-template-rows: 50% 30% 10%; grid-template-columns:33% 33% 33%;}
-.timerbuttons{ display: grid;grid-row-start: 2; grid-row-end: 3;}
-#timercountdown {grid-column-start: 1;grid-column-end: 4; padding: 1vw;}
-#howthisworks{grid-row-start: 3; grid-row-end: 4; grid-column-start: 1; grid-column-end: 4; font-size: 1.5vw; padding: 2vw;}
-#clicktoadd{font-family: 'Pacifico', cursive;text-align:left;font-size: 3vw; border: 1px dotted pink; width: 100%}
-#uno{height: 7vh; font-size: 2vw; }
+.wallet {}
+#timer {display: grid; grid-template-rows: 20% 60% 15% 5%; grid-template-columns:33% 33% 33%;}
+/* .timerbuttons{ display: grid;grid-row-start: 3; grid-row-end: 4;} */
+#timercountdown {font-family: 'Noto Sans JP', sans-serif;position: absolute; top: 30%; left: 40%;;text-align: center; font-size: 4.5vw;}
+#howthisworks{text-align: center; grid-row-start: 4; grid-row-end: 5; grid-column-start: 1; grid-column-end: 4; font-size: 2vw; }
+#clicktoadd{border-radius: 2vw;text-align: left;font-family: 'Pacifico', cursive;font-size: 1.5vw; border: 1px dotted pink; width: 70%}
+#uno{height: 7vh; font-size: 1.3vw; }
 #spendmoney{font-size: 2.5vw;}
 #desc { grid-row-start: 10; grid-row-end: 11; grid-column-start: 1; grid-column-end: 11; color: white; font-size: 1.5vw;}
 #star{display:none;}
-#gameScreen{grid-column-start:1;grid-column-end:10; grid-row-start: 2;grid-row-end:10;}
+#gameScreen{border-radius: 2vw;background-color: #008000;width: 100%;height: 100%; grid-column-start:4;grid-column-end:11; grid-row-start: 1;grid-row-end:10;}
 /* #insertStar{text-align: center;grid-column-start: 6; grid-column-end:7; grid-row-start: 10; grid-row-end: 11;z-index: 3;} */
 #setcountdown{display:none;}
-#quote{font-size: 3vw; font-style: italic; font-weight: bold;}
+#quote{text-align: center; grid-column-start: 1;grid-column-end: 4;font-size: 1.7vw; font-style: italic; font-weight: bold;  }
+#stopwatchimg {width: 100%;height:100%; grid-column-start: 1;grid-column-end: 4;grid-row-start:1;grid-row-end: 3}
+#floatingwindow{top: 19%; left: 21%; height: 52vh; width: 60vw;position: absolute; display: grid; grid-template-rows: 30% 48% 15%;grid-template-columns: 33% 33% 33%}
+#takebreak{width: 10vw;height: 3vh}
+
+
+
+
+
+
+
+@media screen and (min-width: 1300px) {
+  #floatingwindow{width: 45vw; left: 29%; top: 20%}
+  #timercountdown{font-size: 3vw; left: 39%;}
+  #quote{font-size: 1.3vw;}
+  #header { font-size: 4vw; padding: 2vh;}
+  
+
+}
+
+
+
+@media screen and (max-width: 500px){
+ #header {font-size: 6vh;}
+  #quote {font-size: 3vw;}
+  #clicktoadd{font-size: 3.5vw}
+  #takebreak{height: 7vh; width: 15vw}
+  #floatingwindow {top: 22%; left: 14%; height: 50vh; width: 80vw;}
+
+}
+
+
 </style>
 
 <head>
-	<meta charset="utf-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 	<title>Tomato Collector</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&display=swap" rel="stylesheet">
 
 	<!-- <link rel="stylesheet" href="css/style.css"> -->
 
 </head>
 <body>
+<div id='floatingwindow'>      
+
+  <img id='stopwatchimg' src='https://i.imgur.com/DEFWh9y.png' alt='imageofstopwatch'>
+  <button class='timerbuttons' id='start' onclick='timer(25,0)'> Start</button>
+  <button class='timerbuttons' onclick='stoptimer()'> Reset </button>
+  <div id='timercountdown'> 25:00</div>
+  <button id="quotebutton" class='timerbuttons' onclick="newQuote()"> More Motivation!</button>
+
+</div>
 
   <div class='wrapper'>
+    
     <header class='box header' id='header'> Tomato Hunt </header>
     <div class='box timer'id='timer' >
-      <button class='timerbuttons' id='start' onclick='timer(25,0)'> Start</button>
-      <button class='timerbuttons' onclick='stoptimer()'> Reset </button>
-      <button class='timerbuttons' onclick='howMuch()'> Take Break( Cost 1 Tomato) </button>
+      <div id ='quote'> </div>
+
+
+
       <!-- <button id='addwallet' onclick=addStar()> Click here to add your tomato  </button> -->
 
-      <button class='timerbuttons' id='setcountdown'onclick='openprompt()'> New Countdown </button>
-       <div id='timercountdown'> 25:00 Timer</div>
-       <div id='howthisworks'> Instructions: <br> A tomato appears each time you finish a 25 min block. Spend your tomatoes below for breaks </div>
+      <!-- <button class='timerbuttons' id='setcountdown'onclick='openprompt()'> New Countdown </button> -->
      </div>
 
     <div class='box wallet'>
        <div id='walletgrid'>
-         <canvas id='gameScreen' width='720' height='250'></canvas>
+         <canvas id='gameScreen'></canvas>
          <!-- <button id='insertStar' onclick='insertStar()'> Create Stars </button> -->
 
          <div id='desc'></div>
        </div>
    </div>
     <!-- <div class='box spendmoney' id='spendmoney' onclick='howMuch()'> Click here to take a break </div> -->
-    <div id ='quote'class='box footer'> Inspirational quote: </div>
+  
     <div class='box hour'>
       <div id='hourslist'>
-          <button id='clicktoadd' onclick='whatDo()'> Click here to add notes</button>
+          <button id='clicktoadd' onclick='whatDo()'> Add Note</button>
           <div id='uno'> </div>
 
       </div>
 
      </div>
+     <div id='howthisworks' class='box footer'><button id='takebreak' onclick='howMuch()'> Buy Break</button> <br><br>   
+     </div>
+
 <audio id='timerup'>
   <source src='https://onlineclock.net/audio/options/bird-song.mp3' type='audio/ogg'>
     Your browser does not support the audio element.
@@ -120,7 +167,7 @@ var didlist = []
 
 
   function howMuch(){
-    var spend = prompt('How many do you want to use?', 'Each tomato is a 5 Minute break')
+    var spend = prompt('How many do you want to trade?', 'A tomato is worth 5 Minutes')
     console.log('spent ' + spend + ' Now function to remove little dollars from wallet')
     console.log(spend)
     if (spend <=starCount){
@@ -140,14 +187,22 @@ var didlist = []
 
   }
   function whatDo(){
-    var what = prompt('What did you do', 'This gets saved for later');
+    var what = prompt('Note:', '');
+    if (what==undefined){return}
     var today = new Date();
 
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes();
-    let datetime = time+', ' +date
+    // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    let timemins = today.getMinutes();
+  
+    if (timemins<10){timeshow = '0'+ timemins}
+    else {timeshow = timemins}
+
+    var time = today.getHours() + ":" + timeshow
+    let datetime = time
+
+
     console.log(datetime)
-    var whatwstamp = document.getElementById('uno').innerHTML += '<br>' + datetime+ ': ' + what;
+    var whatwstamp = document.getElementById('uno').innerHTML += datetime+ ': ' + what +'<br>' 
     didlist.push(what,datetime)
     console.log(didlist);
 
@@ -175,17 +230,18 @@ function timer(mins,isbreak){
 
     // Output the result in an element with id="demo"
     document.getElementById("timercountdown").innerHTML =
-    + minutes + "m " + seconds + "s ";
+    + minutes + ":" + seconds;
 
 
     // If the count down is over, write some text
     if (distance < 0) {
       clearInterval(x);
-      document.getElementById("timercountdown").innerHTML = "EXPIRED";
+      document.getElementById("timercountdown").innerHTML = "00:00";
       // document.getElementById("demo").addEventListener("click", timer)
       document.getElementById('start').style.display = 'grid'
       document.getElementById('timerup').play()
       document.getElementById('start').style.visibility = 'visible';
+      document.getElementById('howthisworks').innerHTML = 'Total Tomatoes earned: '+ totaltomatoes + '!!!' + '<button id="takebreak" onclick="howMuch()""> Buy Break</button>'
 
       if (isbreak==0){
         console.log('isbreak is 0');
@@ -200,10 +256,10 @@ function stoptimer(){
   try{
     clearInterval(x);
     document.getElementById('start').style.visibility = 'visible';
-    document.getElementById("timercountdown").innerHTML = "EXPIRED";}
+    document.getElementById("timercountdown").innerHTML = "00:00";}
   catch(err){
     document.getElementById('start').style.visibility = 'visible';
-    document.getElementById("timercountdown").innerHTML = "EXPIRED";}
+    document.getElementById("timercountdown").innerHTML = "00:00";}
 }
 function openprompt(){
   var insertMin = prompt('How many minutes?','numbers only')
@@ -245,6 +301,7 @@ let ctx = canvas.getContext('2d');
 let starCount =0
 function addStar(){
   starCount +=1
+  totaltomatoes+=1
   console.log('starcount debugging' +starCount)
   // document.getElementById('addwallet').style.display= 'none'
   determineMath(starCount)
@@ -279,14 +336,26 @@ function determineMath(starcount){
 }
 
 function drawRow(y){
+
   let array = [ 0, 60,120,180,240,300,360,420];
   for (let i=0;i<10;i++){
   ctx.drawImage(imgStar, array[i], y )
 }}
 function drawStar(rem,y){
-  let array = [ 0, 60,120,180,240,300,360,420];
+  let awidth = window.innerWidth
+  console.log(awidth + 'awidth is')
+  adwidth = awidth/48
+  tomatoL = awidth/2 // height of tomato on gamescreen above 1550px//
+  let tomatomodifier = [] // calculate tomato size based on width
+  if (awidth>1500){tomatomodifier[1] = tomatoL/13; tomatomodifier[0] = awidth/33}
+  if (awidth<1500 && awidth > 1001){tomatomodifier[1] = awidth/15; tomatomodifier[0] = awidth/18 }
+
+  if (awidth<1000){tomatomodifier[1] = awidth/5; tomatomodifier[0] = awidth/15 }
+  if (awidth<500){tomatomodifier[1]= awidth/3; tomatomodifier[0] = awidth/4}
+  // let array = [ 0, 60,120,180,240,300,360,420];
+  let array = [0, adwidth, adwidth*2,adwidth*3, adwidth*4, adwidth*5,adwidth*6, adwidth*7]
   for (let i=0;i<rem;i++){
-  ctx.drawImage(imgStar, array[i], array[y] )
+  ctx.drawImage(imgStar, array[i], array[y], tomatomodifier[0], tomatomodifier[1] )
 
 }
 }
@@ -305,10 +374,11 @@ function clearCanvas(){
 }
 let show1 = setTimeout(addStar,1000)
 let show2 = setTimeout(addStar,1500)
+// let showq = setTimeout(newQuote,1000)
 let show3 = setTimeout(addStar,2000)
 
 let clear = setTimeout(clearCanvas,4000)
-
+let totaltomatoes = -2; //-2 because of inital three shown for example//
 function saveJson(input){
   quotejson = input
 
@@ -323,7 +393,7 @@ fetch("https://type.fit/api/quotes")
     let quotejson = data;
     let randy = Math.floor(Math.random()*quotejson.length)
     let quotetext = quotejson[randy].text;
-    document.getElementById('quote').innerHTML += quotetext + '<button id="quotebutto" onclick="newQuote()"> New Quote</button>'
+    document.getElementById('quote').innerHTML += quotetext 
     saveJson(quotejson)
 
 
@@ -334,7 +404,7 @@ function newQuote(){
   let ab =quotejson
   let randy = Math.floor(Math.random()*ab.length)
   let abc = ab[randy].text;
-  document.getElementById('quote').innerHTML = abc + '<button id="quotebutto" onclick="newQuote()"> New Quote</button>'
+  document.getElementById('quote').innerHTML = abc
 
 }
 </script>
