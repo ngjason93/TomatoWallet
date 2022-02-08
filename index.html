@@ -167,7 +167,7 @@ var didlist = []
 
 
   function howMuch(){
-    var spend = prompt('How many do you want to trade?', 'A tomato is worth 5 Minutes')
+    var spend = prompt('How many do you want to trade 1 tomato = 5 min break?', '')
     console.log('spent ' + spend + ' Now function to remove little dollars from wallet')
     console.log(spend)
     if (spend <=starCount){
@@ -242,6 +242,9 @@ function timer(mins,isbreak){
       document.getElementById('timerup').play()
       document.getElementById('start').style.visibility = 'visible';
       document.getElementById('howthisworks').innerHTML = 'Total Tomatoes earned: '+ totaltomatoes + '!!!' + '<button id="takebreak" onclick="howMuch()""> Buy Break</button>'
+	    //COMMENT FOR ALERT FUNCTION
+	    window.alert('Timer up)
+	    
 
       if (isbreak==0){
         console.log('isbreak is 0');
